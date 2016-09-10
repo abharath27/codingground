@@ -1,21 +1,35 @@
-num = "1321"
-#http://www.ardendertat.com/2011/12/01/programming-interview-questions-19-find-next-palindrome-number/
-#Need to do this on own soon...
-def getNextPalindrome(num):
-    num = str(num)
-    tempNum = ""
-    if num == "":
-        return -1
-    if len(num) % 2 == 0:
-        firstHalf = num[:len(num)/2]
-        tempNum = firstHalf + firstHalf[::-1]
-        if int(tempNum) > int(num):
-            return tempNum
-        else:
-            if getNextPalindrome(num[1:-1]) != -1:
-                return int(num[0])*100 + getNextPalindrome(num[1:-1])*10 + int(num[0])
-            else:
-                newDigit = int(num[0]) + 1
-                return newDigit*11
+import copy
+def nextPalin(num):
+    num2 = list(str(num))
+    mid = len(num2)/2
+    n = len(num2)
+    inc = 0
+    incMid = 0
 
-print getNextPalindrome('2345')
+    for i in range(0,mid):
+        if num2[n-i-1] < num2[i]:
+            inc = 1
+            num2[n-i-1] = num2[i]
+        if num2[n-i-1] > num2[i] and inc != 1:
+            incMid = 1
+            break
+        
+    
+    if incMid == 1 or inc != 1:
+        if len(num2) % 2 == 1:
+            l = int(''.join(num2[:(mid+1)])) + 1
+            newNum = str(l) + str(l)[:-1][::-1]
+            
+        else:
+            print 'num2 = ', num2
+            l = int(''.join(num2[:mid])) + 1
+            print 'l = ', l
+            newNum = str(l) + str(l)[::-1]
+        return ''.join(newNum) 
+    
+    return ''.join(num2)
+      
+n = input()
+for i in range(n):
+    print nextPalin(input())
+            
